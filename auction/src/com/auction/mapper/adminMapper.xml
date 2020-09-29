@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.auction.dao.AdminDAO">
+	
+	<resultMap type="com.auction.entity.Admin" id="BaseMap">
+		<id column="id" property="id"/>
+        <result column="username" property="username"/>
+        <result column="password" property="password"/>
+        <result column="authority" property="authority"/>
+        <result column="status" property="status"/>
+	</resultMap>
+	
+  	<!--管理员登录-->
+    <select id="getAdminByAdmin" resultType="com.auction.entity.Admin"
+    	parameterType="com.auction.entity.Admin">
+        select * from admin where status=1 and username=#{username} and password=#{password}
+    </select>
+    
+    <!-- 查询管理员 -->
+    <select id="list" resultMap="BaseMap">
+    	select * from admin
+    </select>
+    
+    <!-- 根据id查询 -->
+    <select id="getAdminById" resultType="com.auction.entity.Admin">
+    	select * from admin where id=#{id}
+    </select>
+    
+     <!-- 根据username查询 -->
+    <select id="getAdminByUsername" resultType="com.auction.entity.Admin">
+    	select * from admin where username=#{username}
+    </select>
+    
+   	<!-- 添加管理员 -->
+   	<insert id="add" parameterType="com.auction.entity.Admin">
+   		insert into admin(username,password,authority)
+   		values(#{username},#{password},#{authority})
+   	</insert>
+   
+	<!-- 禁用 -->
+	<update id="forbid" parameterType="Integer">
+		update admin set status=0 where id=#{id};
+	</update>
+	
+	<!-- 启用 -->
+	<update id="activate" parameterType="Integer">
+		update admin set status=1 where id=#{id};
+	</update>
+	
+	
+	<!-- 删除1条 -->
+	<delete id="delete" parameterType="Integer">
+		delete from admin where id=#{id}
+	</delete>
+	
+	<!-- 真删除多条 -->
+	<delete id="deleteAll" parameterType="int[]">
+		delete from admin where id in
+		<foreach collection="array" item="ids" separator="," open="(" close=")">
+				#{ids}
+		</foreach>
+	</delete>	
+	
+	<!-- 修改密码 -->
+	<update id="updatePwd">
+		update admin set password=#{password} where id=#{id}
+	</update>
+	
+</mapper>

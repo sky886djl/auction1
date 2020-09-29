@@ -1,0 +1,180 @@
+<!--_meta 作为公共模版分离出去-->
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit|ie-comp|ie-stand">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+<link rel="Bookmark" href="/favicon.ico" >
+<link rel="Shortcut Icon" href="/favicon.ico" />
+<!--[if lt IE 9]>
+<script type="text/javascript" src="lib/html5shiv.js"></script>
+<script type="text/javascript" src="lib/respond.min.js"></script>
+
+<![endif]-->
+<link rel="stylesheet" type="text/css" href="static/h-ui/css/H-ui.min.css" />
+<link rel="stylesheet" type="text/css" href="static/h-ui.admin/css/H-ui.admin.css" />
+<link rel="stylesheet" type="text/css" href="lib/Hui-iconfont/1.0.8/iconfont.css" />
+
+<link rel="stylesheet" type="text/css" href="static/h-ui.admin/skin/default/skin.css" id="skin" />
+<link rel="stylesheet" type="text/css" href="static/h-ui.admin/css/style.css" />
+<!--[if IE 6]>
+<script type="text/javascript" src="lib/DD_belatedPNG_0.0.8a-min.js" ></script>
+<script>DD_belatedPNG.fix('*');</script>
+<![endif]-->
+<!--/meta 作为公共模版分离出去-->
+
+<link href="lib/webuploader/0.1.5/webuploader.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div class="page-container">
+	<form action="" method="post" class="form form-horizontal" id="form-article-add">
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>产品名称：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" class="input-text" value="和田玉" placeholder="" id="" name="">
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>产品类别：</label>
+			<div class="formControls col-xs-8 col-sm-9"> <span class="select-box">
+				<select name="" class="select">
+					<option value="0">请选择产品分类</option>
+					<option value="1">车品配件</option>
+					<option value="2">图书影音</option>
+					<option value="3" selected="selected">珠宝首饰</option>
+					<option value="4">电子产品</option>
+				</select>
+				</span> </div>
+		</div>
+
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>发布者：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" name="" id="" placeholder="张三" value="" class="input-text">
+			</div>
+		</div>
+
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>起拍价：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" name="" id="" placeholder="" value="1500" class="input-text" style="width:90%">
+				元</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>加价增幅：</label>
+			<div class="formControls col-xs-8 col-sm-9"> <span class="select-box">
+				<select name="" class="select">
+					<option value="0">请选择加价幅度(原价*加价幅度=竞拍者最小的加码单元)</option>
+					<option value="0.05">5%</option>
+					<option value="0.1">10%</option>
+					<option value="0.15">15%</option>
+					<option value="0.2" selected="selected">20%</option>
+					<option value="0.25">25%</option>
+					<option value="0.3">30%</option>
+					<option value="0.35">35%</option>
+					<option value="0.4">40%</option>
+				</select>
+				</span> </div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>上传图片：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="file" name="pic1" id="pic1" onchange="preview(this)" multiple="multiple"
+ 					accept="image/x-png, image/jpg, image/jpeg, image/gif">
+ 			</div>
+ 			<img src="static/h-ui.admin/images/admin-login-bg.jpg" width="100px" height="100px" style="margin-left: 176px; margin-top: 20px;"  />
+ 			<div id="container" style="margin-left: 160px; margin-top: 20px;">
+ 				
+			</div>
+ 		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>开始时间：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" onfocus="WdatePicker({ dateFmt:'yyyy-MM-dd HH:mm:ss',maxDate:'#F{$dp.$D(\'datemax\')||\'%y-%M-%d\'}' })" id="datemin" class="input-text Wdate" style="width:180px;">
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>结束时间：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" onfocus="WdatePicker({ dateFmt:'yyyy-MM-dd HH:mm:ss',minDate:'#F{$dp.$D(\'datemin\')}' })" id="datemax" class="input-text Wdate" style="width:180px;">
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>产品描述：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" name="" id="" placeholder="" value="" class="input-text" style="width:90%" />
+				</div>
+		</div>
+		<div class="row cl">
+			<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
+				<button onClick="product_save_submit();" class="btn btn-primary radius" type="submit"><i class="Hui-iconfont">&#xe632;</i> 保存并提交审核</button>
+				<button onClick="layer_close();" class="btn btn-default radius" type="button">&nbsp;&nbsp;取消&nbsp;&nbsp;</button>
+			</div>
+		</div>
+	</form>
+</div>
+
+
+<script type="text/javascript"> var msg = "您可以上传png, jpg, 或者gif格式的图片";
+ var filter = {
+ "jpeg": "/9j/4",
+ "gif": "R0lGOD",
+ "png": "iVBORw"
+ };
+ function preview(file) {
+ var container = document.getElementById("container");
+ container.innerHTML = "";
+ if (window.FileReader) {
+ for (var index=0, f; f = file.files[index]; index++) {
+ var filereader = new FileReader();
+ filereader.onload = function (event) {
+  var srcpath = event.target.result;
+  if (!validateImg(srcpath)) {
+  console.log("H5"+msg);
+  } else {
+  showPreviewImage(srcpath);
+  }
+ };
+ filereader.readAsDataURL(f);
+ }
+ } else {
+ if (!/\.jpg$|\.png$|\.gif$/i.test(file.value)) {
+ console.log("原生"+msg);
+ } else {
+ showPreviewImage(file.value);
+ }
+ }
+ }
+ 
+ function validateImg(data) {
+ var pos = data.indexOf(",") + 1;
+ for (var e in filter) {
+ if (data.indexOf(filter[e]) === pos) {
+ return e;
+ }
+ }
+ return null;
+ }
+ 
+ function showPreviewImage(src) {
+ var img = document.createElement('img');
+ img.src = src;
+ img.style = "width:100px;height:100px;margin-left:10px";
+ img.name="img";
+ container.appendChild(img);
+ }
+ 
+ function product_save_submit() {
+ 	var imgs=document.getElementsByName("img");
+ 	for(var i=0;i<imgs.length;i++){
+ 		alert(imgs[i]);
+ 	}
+ }
+ 
+
+</script>
+</body>
+</html>

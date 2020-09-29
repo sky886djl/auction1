@@ -1,0 +1,537 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.auction.dao.ProductDAO">
+	
+	<resultMap type="com.auction.entity.Product" id="ProductMap">
+		<!--主键 -->
+		<id column="id" property="id" />
+		<result column="name" property="name" />
+		<result column="pic_url" property="pic_url" />
+		<result column="initialprice" property="initialPrice" />
+		<result column="nowprice" property="nowPrice" />
+		<result column="uploadDate" property="upLoadDate" />
+		<result column="description" property="description" />
+		<result column="status" property="status" />
+		<result column="start_time" property="start_time" />
+		<result column="deadline" property="deadline" />
+		<result column="click_num" property="click_num" />
+		<result column="join_num" property="join_num" />
+		<association column="type_id" property="type_id" javaType="com.auction.entity.Type">
+			<!-- 取别名tid -->
+			<result column="tid" property="id" />
+			<result column="typeName" property="typeName" />
+		</association>
+		<association column="seller_id" property="seller_id" javaType="com.auction.entity.User">
+			<!-- 取别名uid -->
+			<result column="uid" property="id" />
+			<result column="username" property="username" />
+		</association>
+	</resultMap>
+	
+	<resultMap type="com.auction.entity.Product" id="ProductMap1">
+		<!--主键 -->
+		<id column="id" property="id" />
+		<result column="name" property="name" />
+		<result column="pic_url" property="pic_url" />
+		<result column="initialprice" property="initialPrice" />
+		<result column="nowprice" property="nowPrice" />
+		<result column="uploadDate" property="upLoadDate" />
+		<result column="description" property="description" />
+		<result column="status" property="status" />
+		<result column="start_time" property="start_time" />
+		<result column="deadline" property="deadline" />
+		<result column="click_num" property="click_num" />
+		<result column="join_num" property="join_num" />
+		<result column="isPayed" property="isPayed" />
+		<association column="type_id" property="type_id" javaType="com.auction.entity.Type">
+			<!-- 取别名tid -->
+			<result column="tid" property="id" />
+			<result column="typeName" property="typeName" />
+		</association>
+	</resultMap>
+	
+		
+	<!-- 查询所有产品 -->
+	<select id="getAllProducts" resultMap="ProductMap">
+		select p.id,p.name,p.pic_url,initialprice,nowprice,uploadDate,p.description,p.status,p.start_time,
+		p.deadline,p.click_num,p.join_num,t.id tid,t.typeName,
+		u.id uid,u.username
+		from product p, user u ,type t
+		where p.seller_id=u.id and p.type_id=t.id and p.status&lt;&gt;3
+	</select>
+	
+	<!-- 委托者-查询所有产品 -->
+	<select id="getAllProductsBySellerId" resultMap="ProductMap">
+		select p.id,p.name,p.pic_url,initialprice,nowprice,uploadDate,p.description,p.status,p.start_time,
+		p.deadline,p.click_num,p.join_num,t.id tid,t.typeName,
+		u.id uid,u.username
+		from product p, user u ,type t
+		where p.seller_id=#{seller_id} and p.seller_id=u.id and p.type_id=t.id and p.status&lt;&gt;3
+	</select>
+	
+	
+	<!-- 通过产品类型查询 -->
+	<select id="getProductsByTypeId" resultMap="ProductMap" parameterType="int">
+		select p.id,p.name,p.pic_url,initialprice,nowprice,uploadDate,p.description,p.status,p.start_time,
+		p.deadline,p.click_num,p.join_num,t.id,t.typeName,
+		u.id,u.username
+		from product p, user u ,type t
+		where p.seller_id=u.id and p.type_id=t.id and p.type_id=#{type_id} and p.status not in(0,2,3)
+		order by p.start_time desc
+	</select>
+	
+	<!-- 通过多个产品类型查询 -->
+	<select id="getProductsByTypeIds" resultMap="ProductMap" parameterType="int">
+		select p.id,p.name,p.pic_url,initialprice,nowprice,uploadDate,p.description,p.status,p.start_time,
+		p.deadline,p.click_num,p.join_num,t.id,t.typeName,
+		u.id,u.username
+		from product p, user u ,type t
+		where p.seller_id=u.id and p.type_id=t.id and p.type_id in
+		<foreach collection="array" item="type_ids" separator="," open="(" close=")">
+				#{type_ids}
+		</foreach>
+		 and DATE_FORMAT(NOW(),'%Y-%m-%d %H:%i:%s')
+				BETWEEN
+				DATE_FORMAT(start_time,'%Y-%m-%d %H:%i:%s')
+				and
+				DATE_FORMAT(deadline,'%Y-%m-%d %H:%i:%s')
+		order by p.start_time desc
+	</select>
+	
+	
+	<!-- 通过id查询产品 -->
+	<select id="getProductById" resultMap="ProductMap" parameterType="int">
+		select p.id,p.name,p.pic_url,initialprice,nowprice,uploadDate,p.description,p.status,p.start_time,
+		p.deadline,p.click_num,p.join_num,t.id tid,t.typeName,
+		u.id uid,u.username
+		from product p, user u ,type t
+		where p.seller_id=u.id and p.type_id=t.id and p.id=#{id}
+	</select>
+	
+	<!-- 通过ids查询产品 -->
+	<select id="getProductByIds" resultMap="ProductMap" parameterType="int[]">
+		select p.id,p.name,p.pic_url,initialprice,nowprice,uploadDate,p.description,p.status,p.start_time,
+		p.deadline,p.click_num,p.join_num,t.id tid,t.typeName,
+		u.id uid,u.username
+		from product p, user u ,type t
+		where p.seller_id=u.id and p.type_id=t.id and p.id in
+		<foreach collection="array" item="ids" separator="," open="(" close=")">
+				#{ids}
+		</foreach>
+	</select>
+	
+	<!-- 根据竞买者id查询 getProductsByBidderId-->
+	<select id="getProductsByBidderId" resultMap="ProductMap1" parameterType="int">
+		select p.id,p.name,p.pic_url,initialprice,nowprice,uploadDate,p.description,p.status,p.start_time,
+		p.deadline,p.click_num,p.join_num,p.isPayed,t.id,t.typeName
+		from product p, type t
+		where p.type_id=t.id and p.status not in(0,2,3)
+		and p.id in (select DISTINCT(pro_id) from bidding where buyer_id=#{bidder_id} and bidding.status in (1,10,11))
+		<choose>
+			<!-- 今日拍卖 -->
+			<when test="type==1">
+				and DATE_FORMAT(NOW(),'%Y-%m-%d %H:%i:%s')
+				BETWEEN
+				DATE_FORMAT(start_time,'%Y-%m-%d %H:%i:%s')
+				and
+				DATE_FORMAT(deadline,'%Y-%m-%d %H:%i:%s')
+			</when>
+			<!-- 非今日拍卖 -->
+			<when test="type==2">
+				and DATE_FORMAT(start_time,'%Y-%m-%d')&gt;DATE_FORMAT(now(),'%Y-%m-%d')
+			</when>
+			<when test="type==3">
+				and DATE_FORMAT(deadline,'%Y-%m-%d')&lt;DATE_FORMAT(now(),'%Y-%m-%d')
+			</when>
+		</choose>
+		order by p.start_time desc
+	</select>
+	
+	<!-- 根据竞买者id、输入内容模糊查询 getProductsByStr-->
+	<select id="getProductsByStr" resultMap="ProductMap1" parameterType="Map" >
+		select p.id,p.name,p.pic_url,initialprice,nowprice,uploadDate,p.description,p.status,p.start_time,
+		p.deadline,p.click_num,p.join_num,p.isPayed,t.id tid,t.typeName
+		from product p, type t
+		where p.type_id=t.id and p.status not in(0,2,3)
+		and p.id in (select DISTINCT(pro_id) from bidding where buyer_id=#{bidder_id} and bidding.status in (1,10,11))
+		and (p.name like  concat(concat('%',#{str}),'%') or p.description like concat(concat('%',#{str}),'%') or t.typeName like concat(concat('%',#{str}),'%'))
+		order by p.start_time desc
+	</select>
+	
+	<!-- 关键字模糊查询 getProductsByKeyword-->
+	<select id="getProductsByKeyword" resultMap="ProductMap1" parameterType="String" >
+		select p.id,p.name,p.pic_url,initialprice,nowprice,uploadDate,p.description,p.status,p.start_time,
+		p.deadline,p.click_num,p.join_num,p.isPayed,t.id tid,t.typeName
+		from product p, type t
+		where p.type_id=t.id and p.status not in(0,2,3)
+		and (p.name like  concat(concat('%',#{str}),'%') or p.description like concat(concat('%',#{str}),'%') or t.typeName like concat(concat('%',#{str}),'%'))
+		order by p.start_time asc
+	</select>
+	
+	<!-- 今日拍卖|非今日拍卖  0-已下架 已发布(11-今日拍卖 12即将开始) 2-待审核 3-假删除 4-已结束-->
+	<select id="findAllProducts" resultType="com.auction.entity.Product"   parameterType="java.lang.Integer" >
+		select * from product p
+		where p.status not in(0,2,3) and
+		<choose>
+			<!-- 今日拍卖 -->
+			<when test="_parameter!=null">
+				DATE_FORMAT(NOW(),'%Y-%m-%d %H:%i:%s')
+				BETWEEN
+				DATE_FORMAT(start_time,'%Y-%m-%d %H:%i:%s')
+				and
+				DATE_FORMAT(deadline,'%Y-%m-%d %H:%i:%s')
+			</when>
+			<!-- 非今日拍卖 -->
+			<otherwise>
+				DATE_FORMAT(start_time,'%Y-%m-%d')&gt;DATE_FORMAT(now(),'%Y-%m-%d')
+			</otherwise>
+		</choose>
+		order by start_time desc limit 0,
+		<choose>
+			<!-- 今日拍卖 -->
+			<when test="_parameter!=null">
+				9
+			</when>
+			<!-- 非今日拍卖 -->
+			<otherwise>
+				6
+			</otherwise>
+		</choose>
+	</select>
+	
+		
+	<!-- /** * type * state * timeArea startTime endTime * pricelow pricehigh 
+		price(1 0) bidNum(1 0) */ -->
+	<!-- 多条件查询 -->
+	<select id="findProductsBySort" resultType="com.auction.entity.Product" >
+		select * from product p
+		where 
+		<if test="type!=null">
+			type_id=#{type} and
+		</if>
+		<if test="state!=null">
+		<choose>
+			<!-- 今日拍卖 -->
+			<when test="state==11">
+				DATE_FORMAT(NOW(),'%Y-%m-%d %H:%i:%s')
+				BETWEEN
+				DATE_FORMAT(start_time,'%Y-%m-%d %H:%i:%s')
+				and
+				DATE_FORMAT(deadline,'%Y-%m-%d %H:%i:%s') and
+			</when>
+			<!-- 非今日拍卖 -->
+			<when test="state==12">
+				DATE_FORMAT(start_time,'%Y-%m-%d')&gt;DATE_FORMAT(now(),'%Y-%m-%d')
+				and
+			</when>
+			<!-- 已结束 -->
+			<when test="state==4">
+				DATE_FORMAT(now(),'%Y-%m-%d %H:%i:%s')&gt;DATE_FORMAT(deadline,'%Y-%m-%d %H:%i:%s') and
+			</when>
+		</choose>
+		</if>
+		<choose>
+			<!-- 最近k天 -->
+			<when test="timeArea!=null">
+				DATE_FORMAT(deadline,'%Y-%m-%d %H:%i:%s') between 
+				DATE_FORMAT(NOW(),'%Y-%m-%d %H:%i:%s')
+				and DATE_FORMAT(DATE_ADD(NOW(),INTERVAL #{timeArea} DAY),'%Y-%m-%d %H:%i:%s') and
+			</when>
+			<!-- 将开始时间固定在某个时间段 -->
+			<otherwise>
+				<if test="startTime!=null and endTime!=null">
+				DATE_FORMAT(deadline,'%Y-%m-%d') between 
+				str_to_date(#{startTime},'%Y-%m-%d')
+				and str_to_date(#{endTime},'%Y-%m-%d')
+				and
+				</if>
+			</otherwise>
+		</choose>
+		<if test="pricelow!=null and pricehigh!=null">
+			nowprice between #{pricelow} and #{pricehigh} and
+		</if>
+		p.status not in(0,2,3)
+		order by start_time desc,
+		<if test="price!=null">
+		<choose>
+			<when test="price==1">
+				<!-- 升序 -->
+				nowprice asc,
+			</when>
+			<when test="price==2">
+				<!-- 降序 -->
+				nowprice desc,
+			</when>
+		</choose>
+		</if>
+		<if test="bidNum!=null">
+		<choose>
+			<when test="bidNum==1">
+				join_num asc,
+			</when>
+			<when test="bidNum==2">
+				<!-- 降序 -->
+				join_num desc,
+			</when>
+		</choose>
+		</if>
+		click_num desc
+	</select>
+
+	
+	
+	
+	<!-- 通过已删除的产品类型查询 -->
+	<select id="getAllDelProducts" resultMap="ProductMap">
+		select p.id,p.name,p.pic_url,initialprice,nowprice,uploadDate,p.description,p.status,p.start_time,
+		p.deadline,p.click_num,p.join_num,t.id tid,t.typeName,
+		u.id uid,u.username
+		from product p, user u ,type t
+		where p.seller_id=u.id and p.type_id=t.id and p.status=3
+	</select>
+	
+	<!-- 总点击量 -->
+	<select id="getTotalClick" resultType="java.lang.Integer"   parameterType="java.lang.Integer" >
+		select ifnull(sum(click_num),0) from product p
+		where p.status not in(0,2,3) and
+		<choose>
+			<!-- 今日拍卖 -->
+			<when test="_parameter!=null">
+				DATE_FORMAT(NOW(),'%Y-%m-%d %H:%i:%s')
+				BETWEEN
+				DATE_FORMAT(start_time,'%Y-%m-%d %H:%i:%s')
+				and
+				DATE_FORMAT(deadline,'%Y-%m-%d %H:%i:%s')
+			</when>
+			<!-- 非今日拍卖 -->
+			<otherwise>
+				DATE_FORMAT(start_time,'%Y-%m-%d')&gt;DATE_FORMAT(now(),'%Y-%m-%d')
+			</otherwise>
+		</choose>
+	</select>
+	
+	<!-- 总产品数-->
+	<select id="getProTotalNum" resultType="java.lang.Integer"   parameterType="java.lang.Integer" >
+		select ifnull(count(*),0) from product p
+		where p.status not in(0,2,3) and
+		<choose>
+			<!-- 今日拍卖 -->
+			<when test="_parameter!=null">
+				DATE_FORMAT(NOW(),'%Y-%m-%d %H:%i:%s')
+				BETWEEN
+				DATE_FORMAT(start_time,'%Y-%m-%d %H:%i:%s')
+				and
+				DATE_FORMAT(deadline,'%Y-%m-%d %H:%i:%s')
+			</when>
+			<!-- 非今日拍卖 -->
+			<otherwise>
+				DATE_FORMAT(start_time,'%Y-%m-%d')&gt;DATE_FORMAT(now(),'%Y-%m-%d')
+			</otherwise>
+		</choose>
+	</select>
+	
+	<!-- 修改拍卖品信息 -->
+	<update id="updateProduct" parameterType="com.auction.entity.Product">
+		update product set name=#{name},type_id=#{type_id.id},start_time=#{start_time},
+		deadline=#{deadline},description=#{description},uploadDate=now(),pic_url=#{pic_url}
+		 where id=#{id}
+	</update>
+	
+	<!-- 下架 -->
+	<update id="downShelf" parameterType="int">
+		update product set status=0 where id=#{id}
+	</update>
+	
+	<!-- 发布 -->
+	<update id="release" parameterType="int">
+		update product set status=1 where id=#{id}
+	</update>
+	
+	<!-- 假删除 -->
+	<update id="deleteFalse" parameterType="int">
+		update product set status=3 where id=#{id}
+	</update>
+	
+	<!-- 假删除多条 -->
+	<update id="deleteAllFalse" parameterType="int[]">
+		update product set status=3 where id in 
+			<foreach collection="array" item="ids" separator="," open="(" close=")">
+				#{ids}
+			</foreach>
+	</update>
+	
+	<!-- 批量还原 -->
+	<update id="backsAll" parameterType="int[]">
+		update product set status=1 where id in 
+			<foreach collection="array" item="ids" separator="," open="(" close=")">
+				#{ids}
+			</foreach>
+	</update>
+	
+	<!-- 删除图片 -->
+	<update id="changePic">
+		update product set pic_url=#{pic_url} where id=#{id}
+	</update>	
+	
+	
+	<!-- 真删除 -->
+	<delete id="deleteTrue" parameterType="int">
+		delete from product where id=#{id}
+	</delete>
+	
+	<!-- 真删除多条 -->
+	<delete id="deleteAllTrue" parameterType="int[]">
+		delete from product where id in
+		<foreach collection="array" item="ids" separator="," open="(" close=")">
+				#{ids}
+		</foreach>
+	</delete>	
+	
+	
+	
+	<!-- 增加商品 -->
+	<insert id="add" parameterType="com.auction.entity.Product">
+		insert into product(name,pic_url,nowPrice,initialPrice,upLoadDate,description,
+			type_id,seller_id,status,start_time,deadline)
+		values(#{name},#{pic_url},#{nowPrice},#{initialPrice},now(),#{description},#{type_id.id},#{seller_id.id},12,
+		#{start_time},#{deadline})
+	</insert>
+	
+	<!-- 增加点击数 -->
+	<update id="addClickNum" parameterType="int">
+		update product set click_num=click_num+1 where
+		id=#{id}
+	</update>
+
+	<!-- 增加竞拍人数 -->
+	<update id="addJoin_num">
+		update product set join_num=join_num+1 where id=#{id}
+	</update>
+	
+	<!-- 更新当前价格 更新当前买家-->
+	<update id="updateNowPrice" parameterType="Map">
+		update product set
+		nowprice=#{bidPrice}
+		where id=#{product_id}
+	</update>
+	
+	<!-- 拍卖结束后已经处理 -->
+	<update id="finish">
+		update product set isFinished=1 where id=#{id}
+	</update>
+	
+	<!-- 拍卖结束后已经支付余款 -->
+	<update id="payed">
+		update product set isPayed=1 where id=#{id}
+	</update>
+	
+	<!-- 通过类型查询 -->
+	<!-- <select id="findProductsByTypeId" resultMap="ProduceMap1">
+		select * from product p
+		where type_id=#{type_id} and DATE_FORMAT(now(),'%Y-%m-%d %H:%i:%s')&lt;DATE_FORMAT(deadline,'%Y-%m-%d %H:%i:%s')
+		and status=1 order by join_num desc, start_time asc,click_num desc
+	</select> -->
+	
+	<!-- 通过类型查询 -->
+	<!-- <select id="findProductsByTypeId" resultType="com.auction.entity.Product">
+		select * from product where type_id=#{type_id}
+	</select> -->
+	
+	<!-- 通过买家查询 -->
+	<!-- <select id="findProductsByBuyerId" resultMap="ProduceMap">
+		select
+		p.id,p.name,pic_url,initialprice,nowprice,uploadDate,description,type_id,
+		u1.id,u1.username,u1.tel,u1.email,u1.address,
+		u2.id,u2.username,u2.tel,u2.email,u2.address,
+		p.status,start_time,days,deadline,click_num,join_num,growthTime
+		from
+		product p,user u1,user u2
+		where p.seller_id=u1.id and
+		p.buyer_id=u2.id and
+		buyer_id=#{buyer_id} and p.status=1
+		order by join_num desc,
+		start_time asc,click_num desc
+	</select> -->
+	<!-- 通过卖家查询 -->
+	<!-- <select id="findProductsBySellerId" resultMap="ProduceMap">
+		select
+		p.id,p.name,pic_url,initialprice,nowprice,uploadDate,description,type_id,
+		u1.id,u1.username,u1.tel,u1.email,u1.address,
+		u2.id,u2.username,u2.tel,u2.email,u2.address,
+		p.status,start_time,days,deadline,click_num,join_num,growthTime
+		from
+		product p,user u1,user u2
+		where  p.seller_id=u1.id and
+		p.buyer_id=u2.id and
+		seller_id=#{seller_id} and p.status=1
+		order by join_num desc,
+		start_time asc,click_num desc
+	</select> -->
+	<!-- 通过日期查询 -->
+	<!-- <select id="findProductsByDate" resultMap="ProduceMap">
+		select
+		p.id,p.name,pic_url,initialprice,nowprice,uploadDate,description,type_id,
+		u1.id,u1.username,u1.tel,u1.email,u1.address,
+		u2.id,u2.username,u2.tel,u2.email,u2.address,
+		p.status,start_time,days,deadline,click_num,join_num,growthTime
+		from
+		product p,user u1,user u2
+		where p.seller_id=u1.id and
+		p.buyer_id=u2.id and
+		DATE_FORMAT(deadline,'%Y')=#{year} and
+		DATE_FORMAT(deadline,'%m')=#{month} and
+		DATE_FORMAT(deadline,'%d')=#{day} and p.status=1
+		order by join_num desc, start_time
+		asc,click_num desc
+	</select>
+	通过id查询
+	<select id="getProductById" resultMap="ProduceMap"
+		parameterType="int">
+		select
+		p.id,p.name,pic_url,initialprice,nowprice,uploadDate,description,type_id,
+		p.status,start_time,days,deadline,click_num,join_num,growthTime,
+		u2.id,u2.username,u2.tel,u2.email,u2.address,
+		u1.id,u1.username,u1.tel,u1.email,u1.address
+		from
+		product p,user as u1,user as u2
+		where p.id=#{id} and 
+		p.seller_id=u1.id and
+		p.buyer_id=u2.id and p.status=1
+	</select> -->
+	
+	
+	
+
+	<!-- 增加图片 -->
+	<!-- <update id="addPic" parameterType="com.auction.entity.Product">
+		update product set
+		pic_url=concat(pic_url,';',#{pic_url}) where id=#{id}
+	</update>
+ -->
+ 
+	<!-- 下架商品 -->
+	<!-- <update id="forbideen">
+		update product set status=0 where id=#{id}
+	</update> -->
+
+	<!-- 更新增长时间 -->
+<!-- 	<update id="updateGrowTime">
+		update product set growthTime=#{minute}
+	</update>
+ -->
+
+	
+
+	<!-- 更新截止时间 -->
+	<!-- <update id="updateDeadline"> update product set
+		deadline=DATE_ADD(deadline,INTERVAL
+		growthTime MINUTE) where id=#{id}
+	</update> -->
+	
+	
+	<!-- 删除 -->
+	<!-- <delete id="deleteProduct">
+		delete from product where id=#{id}
+	</delete> -->
+
+</mapper>

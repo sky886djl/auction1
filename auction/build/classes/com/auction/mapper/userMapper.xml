@@ -1,0 +1,174 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.auction.dao.UserDAO">
+    <resultMap type="com.auction.entity.User" id="BaseMap">
+        <!-- 主键 -->
+        <id column="id" property="id"/>
+        <result column="username" property="username"/>
+        <result column="password" property="password"/>
+        <result column="name" property="name"/>
+        <result column="gender" property="gender"/>
+        <result column="age" property="age"/>
+        <result column="tel" property="tel"/>
+        <result column="email" property="email"/>
+        <result column="address" property="address"/>
+        <result column="status" property="status"/>
+        <result column="account" property="account"/>
+        <result column="headpic" property="headpic"/>
+        <result column="declaration" property="declaration"/>
+    </resultMap>
+	<!-- 根据用户id查找 -->
+    <select id="getUserById" resultType="com.auction.entity.User"
+    	parameterType="java.lang.Integer">
+        select * from user where id = #{id}
+    </select>
+    <!-- 根据用户名/手机号/邮箱和密码查找用户 -->
+    <select id="selectUser" resultType="com.auction.entity.User"
+    	parameterType="com.auction.entity.User">
+        select * from user where password=#{password} and status=1
+        	<choose>
+        		<when test="username !=null">
+		        	and username = #{username}
+        		</when>
+        		<when test="tel !=null">
+		            and tel = #{tel}
+        		</when>
+        		<when test="email !=null">
+        			and email = #{email}
+        		</when>
+        	</choose>
+    </select>
+    
+    <!-- 单个对象新增 -->
+    <insert id="add" parameterType="com.auction.entity.User">
+        insert into user (username,password,name,gender,age,tel,email,address,type)
+        values (#{username},#{password},#{name},#{gender},#{age},
+        #{tel},#{email},#{address},#{type})
+    </insert>
+	
+	<!-- 单个对象更新 -->
+    <update id="update" parameterType="com.auction.entity.User">
+        update user
+        <set>
+            <if test="name != null">
+                name = #{name},
+            </if>
+            <if test="gender !=null">
+                gender = #{gender},
+            </if>
+            <if test="age !=null">
+                age = #{age},
+            </if>
+            <if test="tel !=null">
+                tel = #{tel},
+            </if>
+            <if test="email !=null">
+                email = #{email},
+            </if>
+            <if test="address !=null">
+                address = #{address},
+            </if>
+            <if test="declaration !=null">
+                declaration = #{declaration},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+    
+	<!-- 除已删除的数据全查 -->
+	<select id="findAllUsers" resultMap="BaseMap">
+        select * from user where status&lt;&gt;2
+    </select>
+    
+    <!-- 已删除的数据全查 -->
+	<select id="findAllDelUsers" resultMap="BaseMap">
+        select * from user where status=2
+    </select>
+    
+    <!-- 单个对象禁用 -->
+    <update id="forbidden" parameterType="java.lang.Integer">
+        update user set status=0 where id = #{id}
+    </update>
+    
+     <!-- 单个对象启用 -->
+    <update id="activate" parameterType="java.lang.Integer">
+        update user set status=1 where id = #{id}
+    </update>
+    
+    <!-- 通过email查询email -->
+     <select id="selectEmail" resultType="java.lang.String"
+    	parameterType="java.lang.String">
+        select email from user where email=#{email}
+    </select>
+	 
+	<!-- 通过电话查询电话 -->
+	 <select id="selectTel" resultType="java.lang.String"
+    	parameterType="java.lang.String">
+        select tel from user where tel=#{tel}
+    </select>
+    
+    <!-- 获取最大的用户名 -->
+    <select id="getMaxUsername" resultType="java.lang.String">
+    	select max(username) from user
+    </select>
+    
+    <!-- 通过username查询id -->
+    <select id="getIdByUsername" resultType="int">
+    	select id from user where username=#{username}
+    </select>
+    <!-- 增加账户余额 -->
+    <update id="addAccount" parameterType="Map">
+    	update user set account=account+#{money} where id=#{id};
+    </update>
+    
+    <!-- 修改密码 -->
+    <update id="changePwd">
+    	update user set password=#{newpwd} where id=#{id}
+    </update>
+    
+	<!-- 减少账户余额 -->
+	<update id="subAccount" parameterType="Map">
+    	update user set account=account-#{money} where id=#{id};
+    </update>
+    
+    <!-- 假删除 -->
+    <update id="deleteFalseById">
+    	update user set status=2 where id=#{id}
+    </update>
+    
+    <!-- 真删除 -->
+    <delete id="deleteTrueById">
+    	delete from user where id=#{id}
+    </delete>
+    
+    <!-- 假删除多条 -->
+	<update id="deleteAllFalseByIds" parameterType="int[]">
+		update user set status=2 where id in 
+			<foreach collection="array" item="ids" separator="," open="(" close=")">
+				#{ids}
+			</foreach>
+	</update>
+	
+	<!-- 真删除多条 -->
+	<delete id="deleteAllTrueByIds" parameterType="int[]">
+		delete from user where id in
+		<foreach collection="array" item="ids" separator="," open="(" close=")">
+				#{ids}
+		</foreach>
+	</delete>	
+	
+	<!--修改头像 -->
+	<update id="changeHeadPic">
+    	update user set headpic=#{newPic} where id=#{id}
+    </update>
+	
+    <!-- 批量还原 -->
+    <update id="activates" parameterType="int[]">
+    	update user set status=1 where id in
+		<foreach collection="array" item="ids" separator="," open="(" close=")">
+				#{ids}
+		</foreach>
+    </update>
+</mapper>

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.auction.dao.MessageDAO">
+	<resultMap type="com.auction.entity.Message" id="MessageMap">
+		<!--主键 -->
+		<id column="id" property="id" />
+		<result column="content" property="content" />
+		<result column="isRead" property="isRead" />
+		<result column="releaseTime" property="releaseTime" />
+		<result column="msgType" property="msgType" />
+		<association column="origin_user_id" property="origin_user_id" javaType="com.auction.entity.User">
+			<!-- 取别名uid -->
+			<result column="uid" property="id" />
+			<result column="username" property="username" />
+		</association>
+		<association column="pro_id" property="pro_id" javaType="com.auction.entity.Product">
+			<!-- 取别名uid -->
+			<result column="pid" property="id" />
+			<result column="name" property="name" />
+			<result column="pic_url" property="pic_url" />
+			<result column="nowprice" property="nowPrice" />
+			<result column="initialprice" property="initialPrice" />
+			<result column="isPayed" property="isPayed" />
+		</association>
+	</resultMap>
+	<!-- 新增消息 -->
+	<insert id="addMessage">
+		insert into message(content,origin_user_id,pro_id,msgType,releaseTime)
+		values(#{content},#{origin_user_id.id},#{pro_id.id},#{msgType},now())
+	</insert>	
+	
+	<!-- 根据原用户查询消息 -->
+	<select id="getMessagesByUserIdSimple" resultType="int" >
+		select count(*) from message where origin_user_id=#{origin_user_id} and isRead=0
+	</select>
+	
+	<!-- 根据原用户查询消息 -->
+	<select id="getMessagesByUserIdComplex" resultMap="MessageMap" >
+		select m.id,m.content,m.isRead,m.releaseTime,m.msgType,
+		u.id uid,u.username,
+		p.id pid,p.name,p.pic_url,p.nowprice,p.initialPrice,p.isPayed
+			from message m, user u, product p
+			where m.origin_user_id=#{origin_user_id} and
+			<if test="msgType!=0">
+				msgType=#{msgType} and
+			</if>
+			 m.origin_user_id=u.id and m.pro_id=p.id
+			 order by releaseTime desc
+	</select>
+	
+	<!-- 设置已读 -->
+	<update id="alreadyRead" parameterType="int[]" >
+		update message set isRead=1 where 
+			 id in
+			<foreach collection="array" item="ids" separator="," open="(" close=")">
+					#{ids}
+			</foreach>
+	</update>
+	
+	<!-- 根据消息查询消息 -->
+	<select id="getMessageByMessage" parameterType="com.auction.entity.Message" resultType="int">
+		select count(*) from message where content=#{content} and origin_user_id=#{origin_user_id.id} and pro_id=#{pro_id.id}
+		and msgType=#{msgType}
+	</select>
+	
+	<!-- 删除消息 -->
+	<delete id="deleteMessageById">
+		delete from message where id=#{id}
+	</delete>
+	
+</mapper>

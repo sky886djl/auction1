@@ -1,0 +1,229 @@
+.sf-wrap {
+	/*border: 1px solid black;*/
+	width: 1190px;
+	margin-left:60px;
+	margin-bottom:20px;
+	color: #333;
+	font: 12px/1.5 tahoma, arial, 'Hiragino Sans GB', '\5b8b\4f53',
+		sans-serif;
+}
+
+.sf-filter {
+	margin: 30px 0 0;
+	position: relative;
+	border: 1px solid #e2e2e2;
+	border-bottom-color: #c8c8c8;
+}
+
+.sf-filter-row {
+	zoom: 1;
+	clear: none !important;
+	overflow: hidden;
+	margin-top: 0px;
+	margin-bottom: 0px;
+	margin-left: -39px;
+}
+
+
+
+ul {
+	list-style: none;
+}
+
+.sf-filter-key {
+	float: left;
+	width: 98px;
+	height: 100%;
+	color: #999;
+	text-align: right;
+	/*padding-top: 20px;*/
+	padding-top: 15px;
+	padding-right: 30px;
+	background-color: #f6f6f6;
+	vertical-align: top;
+	margin-bottom: -1000px;
+	padding-bottom: 1000px;
+}
+
+.sf-filter-value {
+	margin-left: 158px;
+	padding: 6px 0;
+	margin-bottom: -1000px;
+	padding-bottom: 1000px;
+	*margin-top: -15px;
+	overflow: hidden;
+	zoom: 1;
+	clear: none !important;
+}
+
+.sf-filter-value1 {
+	margin-left: 20px;
+	padding: 6px 0;
+	height:40px;
+	*margin-top: -15px;
+	overflow: hidden;
+	zoom: 1;
+	clear: none !important;
+}
+.unlimited {
+	width: 34px;
+	height: 22px;
+	margin-top: 6px;
+}
+
+.unlimited a {
+	background: #F6F6F6;
+	padding-right: 3px;
+	display: inline-block;
+	*display: inline;
+	*zoom: 1;
+	text-decoration: none;
+	padding: 0 3px;
+	line-height: 16px;
+	height: 16px;
+	overflow: hidden;
+	vertical-align: middle;
+	text-decoration: none;
+	color: #656565;
+}
+
+.condition {
+	margin-bottom: -1000px;
+	padding-bottom: 1000px;
+	padding-left: 70px;
+	*padding-left: 0;
+	zoom: 1;
+	clear: none !important;
+	margin-top: -28px;
+}
+
+
+
+.condition li {
+	display: inline-block;
+	*display: inline;
+	*zoom: 1;
+	margin-bottom: -6px;
+	position: relative;
+	vertical-align: top;
+	z-index: 2;
+}
+
+.condition em {
+	font-style: normal;
+	font-weight: 400;
+	height: 30px;
+	line-height: 30px;
+	padding: 0 4px 0 8px;
+	border: 1px solid transparent;
+	border-bottom: none;
+	_border-color: tomato;
+	_filter: chroma(color = tomato);
+	display: inline-block;
+	*display: inline;
+	*zoom: 1;
+	position: relative;
+	z-index: 2;
+}
+
+.condition a {
+	margin: 6px 0;
+	display: inline-block;
+	*display: inline;
+	*zoom: 1;
+	color: #656565;
+	text-decoration: none;
+	padding: 0 3px;
+	line-height: 18px;
+	height: 18px;
+	overflow: hidden;
+	vertical-align: middle;
+}
+
+.sf-filter-row::after {
+	content: "";
+	clear: both;
+	display: block !important;
+	height: 0;
+}
+
+.dotted {
+	height: 0;
+	border: none;
+	border-bottom: 1px dotted #e0e0e0;
+	*overflow: hidden;
+}
+
+.shadowx {
+	position: absolute;
+	width: 100%;
+	bottom: -10px;
+	left: 0;
+	height: 0;
+	border: none;
+	border-bottom: 2px solid #f2f2f2;
+}
+
+.condition li .price {
+	border: 1px solid #dedede;
+	/*margin-top: 5px;*/
+	width: 90px;
+	height: 20px;
+	font-size: 10px;
+	color:#656565;
+	margin-left:2px;
+}
+
+
+
+.button1 {
+	height: 22px;
+	border: 1px solid #dedede;
+	background-color: #f6f6f6;
+	cursor: pointer;
+	font: 12px/1.5 tahoma, arial, 'Hiragino Sans GB', '\5b8b\4f53',
+		sans-serif;
+}
+.button2{
+	width:60px;height:40px;background:#D91615;color:#FFFFFF;cursor: pointer;font: 14px/1.5 tahoma, arial, 'Hiragino Sans GB', '\5b8b\4f53',sans-serif;border: 1px solid #dedede;
+}
+.button3{
+	width:40px;height:40px;background:#F6F6F6;color:#333333;cursor: pointer;font: 14px/1.5 tahoma, arial, 'Hiragino Sans GB', '\5b8b\4f53',sans-serif;border: 1px solid #dedede;
+}
+.pagediv{
+	margin-top:900px;margin-left:-600px;float:left;
+	font: 16px/1.5 tahoma, arial, 'Hiragino Sans GB', '\5b8b\4f53',sans-serif;
+	color:#333333;
+}
+.pagediv .countpage e {
+	font-family: "微软雅黑";
+	margin-left:4px;
+	margin-right:4px;
+}
+
+.q0 {
+	color: #666999;
+	width: 1216px;
+	float: left;
+	margin-left: 60px;
+	margin-bottom:200px;
+	align-content: center;
+}
+
+
+
+.priceguild {
+	width:1186px;
+	margin-left:60px;
+	background:#FAFAFA;
+	border:1px #E2E2E2 solid;
+	font-size:12px;
+	height:40px;
+	font: 12px/1.5 tahoma, arial, 'Hiragino Sans GB', '\5b8b\4f53',
+		sans-serif;
+}
+
+.totalnums {
+	margin-left:1100px;
+	margin-top:-20px;
+}

@@ -1,0 +1,97 @@
+.comment{
+	width:920px;
+	height:600px;
+	margin-left:30px;
+	margin-top:30px;
+}
+.commentContent {
+	padding:4px;
+	color:#666666;
+}
+.item0 {
+	width:930px;
+	height:200px;
+	border:1px solid #EAEAEA;
+	margin-top:16px;
+}
+
+.datetime1 {
+	margin-left: 640px;
+}
+
+.item1{
+	width:890px;
+	height:140px;
+	margin:14px;
+	background:#F6F6F6;
+	margin-top:0px;
+}
+
+.item1 .commentPic {
+	height:140px;
+	width:340px;
+}
+
+.item0 .operation {
+	width:50px;
+	margin-left:820px;
+	margin-top:-10px;
+}
+.item0 .operation a {
+	text-decoration: none;
+	color:dodgerblue;
+}
+.item0 .operation a:hover {
+	color:#888888;
+}
+
+.item1 .detail {
+	width:350px;
+	height:140px;
+	margin-top:-144px;
+	margin-left:340px;
+	font:14px/1.2 "微软雅黑";
+	color:#555555;
+}
+
+.item1 .detail .descri {
+	height:120px;
+	margin:10px;
+}
+.item1 .detail .type {
+	height:20px;
+	margin:10px;
+	margin-top:-16px;
+}
+
+.item1 .column44 {
+	width:180px;
+	height:140px;
+	margin-left:690px;
+	margin-top:-136px;
+	padding-top:18px;
+	padding-left:14px;
+	font:14px/1.2 "微软雅黑";
+	font-weight: 700;
+	color:#666666;
+	
+}
+
+.item1 .column44 .price {
+	color:#C11F3A;
+	font:22px/1.2 "微软雅黑";
+	font-weight: 700;
+	margin:10px;
+}
+
+.item1 .column44 .initialPrice .price1 {
+	font:16px "微软雅黑";
+	color:#777777;
+	font-weight: 700;
+	margin:10px;
+}
+
+.column44 .initialPrice {
+	margin-top:10px;
+}
+

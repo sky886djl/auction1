@@ -1,0 +1,159 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.auction.dao.BiddingDAO">
+	<resultMap type="com.auction.entity.Bidding" id="BaseMap">
+		<id column="id" property="id"/>
+        <result column="money" property="money"/>
+        <result column="status" property="status"/>
+        <result column="opTime" property="opTime"/>
+        <association property="buyer_id" fetchType="eager" javaType="com.auction.entity.User">
+        	<id column="uid" property="id"/>
+        	<result column="username" property="username"/>
+        </association>
+        <association property="pro_id" fetchType="lazy" javaType="com.auction.entity.Product">
+        	<id column="pid" property="id"/>
+        	<result column="name" property="name"/>
+        </association>
+    </resultMap>
+    
+    <resultMap type="com.auction.entity.Bidding" id="BaseMap0">
+		<id column="id" property="id"/>
+        <result column="money" property="money"/>
+        <result column="status" property="status"/>
+        <result column="opTime" property="opTime"/>
+        <association property="buyer_id" fetchType="eager" javaType="com.auction.entity.User">
+        	<id column="bid" property="id"/>
+        </association>
+    </resultMap>
+	
+	<resultMap type="com.auction.entity.Bidding" id="DepositBaseMap">
+        <id column="id" property="id"/>
+        <result column="money" property="money"/>
+        <result column="status" property="status"/>
+        <result column="opTime" property="opTime"/>
+        <association property="buyer_id" fetchType="eager" javaType="com.auction.entity.User">
+        	<id column="uid" property="id"/>
+        	<result column="username" property="username"/>
+        </association>
+    </resultMap>
+	
+	<resultMap type="com.auction.entity.Bidding" id="BaseMap1">
+		<id column="id" property="id"/>
+        <result column="money" property="money"/>
+        <result column="status" property="status"/>
+        <result column="opTime" property="opTime"/>
+        <association property="buyer_id" fetchType="eager" javaType="com.auction.entity.User">
+        	<id column="id" property="id"/>
+        	<result column="username" property="username"/>
+        </association>
+        <association property="pro_id" fetchType="eager" javaType="com.auction.entity.Product">
+        	<!-- 取别名uid -->
+			<result column="pid" property="id" />
+			<result column="name" property="name" />
+			<result column="pic_url" property="pic_url" />
+			<result column="nowprice" property="nowPrice" />
+			<result column="deadline" property="deadline" />
+			<result column="start_time" property="start_time" />
+        </association>
+    </resultMap>
+	
+	<!-- 单个对象新增 -->
+    <insert id="addBidding" parameterType="com.auction.entity.Bidding">
+        insert into bidding(pro_id,buyer_id,money,opTime,status) values(#{pro_id.id},
+        #{buyer_id.id},#{money},now(),#{status});
+    </insert>
+    <!-- 单个对象删除 -->
+    <delete id="removeBidding">
+    	delete from bidding where id=#{id};
+    </delete>
+	<!-- 通过ids查询 getBiddingsByProId-->
+	<select id="getBiddingsByProId" resultMap="BaseMap0" parameterType="int">
+		select b.id,b.money,b.status,b.opTime,b.buyer_id bid from bidding b
+		where b.status in(1,10,11) and b.pro_id=#{pro_id}
+		order by money desc
+	</select>
+	
+	<!--  getNewBiddingsByProId-->
+	<select id="getNewBiddingsByProId" resultMap="BaseMap0" parameterType="int">
+		select b.id,b.money,b.status,b.opTime,b.buyer_id bid from bidding b
+		where b.status in(1,2) and b.pro_id=#{pro_id}
+		order by money desc
+	</select>
+	<!-- 全查 -->
+	<select id="list" resultMap="BaseMap">
+		select b.id,b.money,b.status,b.opTime,u.id uid,u.username,p.id pid,p.name from bidding
+		 b,user u,product p where b.buyer_id=u.id and b.pro_id=p.id 
+		 order by b.opTime desc
+	</select>
+	<!-- 删除一条记录 -->
+    <delete id="deleteBiddingById">
+   		delete from bidding where id=#{id}
+    </delete>
+	
+	<!-- 批量删除 -->
+	<delete id="deleteBiddingsByIds" parameterType="int[]">
+		delete from bidding where id in
+		<foreach collection="array" item="ids" separator="," open="(" close=")">
+				#{ids}
+		</foreach>
+	</delete>
+	
+	<!-- 根据商品id查找所有记录 -->
+    <select id="getAllBidding" resultMap="BaseMap0">
+        select id,money,status,opTime,buyer_id bid from bidding where 
+        	<if test="pro_id !=null">
+                pro_id = #{pro_id} and
+            </if>
+            <if test="buyer_id !=null">
+                buyer_id = #{buyer_id} and
+            </if>
+                status = #{status} 
+    </select>
+	
+	<!-- 某商品的竞价记录 -->
+	<select id="getAllBiddingByProNoLimit" resultMap="DepositBaseMap">
+		select b.id,b.money,b.status,b.opTime,u.id uid,u.username from bidding b,user u
+		where b.buyer_id=u.id and pro_id=#{pro_id} and b.status in (1,10,11)
+		order by money desc
+    </select>	
+    
+    <!-- 某商品最高价记录 -->
+    <select id="getMaxPriceBidding" resultMap="DepositBaseMap">
+    	select b.id,b.money,b.status,b.opTime,u.id uid,u.username
+    	from bidding b,user u
+    	where pro_id=#{pro_id} and u.id=b.buyer_id and b.status=1 and 
+    	money=(select max(money) from bidding where pro_id=#{pro_id})
+    </select>
+    
+ 	<!-- 根据某竞买者id查询竞拍信息 -->
+   	<select id="getBiddingsByBuyerId" resultMap="BaseMap">
+		select b.id,b.money,b.status,b.opTime,u.id uid,u.username,p.id pid,p.name from bidding
+		 b,user u,product p where b.buyer_id=u.id and b.pro_id=p.id and b.buyer_id=#{buyer_id}
+		 and b.status in (1,2)
+    </select>	
+    
+    
+    
+    <!-- 根据某竞买者id查询竞拍信息 -->
+   	<select id="getBiddingsByBuyerId1" resultMap="BaseMap1">
+		select b.id,b.money,b.status,b.opTime,u.id,u.username,
+		p.id pid,p.name,p.pic_url,p.nowprice,p.deadline,p.start_time
+		 from bidding b,user u,product p 
+		 where b.buyer_id=u.id and b.pro_id=p.id and b.buyer_id=#{buyer_id}
+		  and ((b.status in(1,10,11) and money in (
+			select max(money) from bidding b1 where b1.pro_id=b.pro_id and b1.buyer_id=#{buyer_id}
+			group by b.pro_id
+		)) or b.status in (2,20,21) )
+		 
+    </select>	
+    
+    <!-- 更新处理结果 -->
+	<update id="updateStatus">
+		update bidding set status=#{status} where id=#{id}
+	</update>
+	
+	
+    
+</mapper>

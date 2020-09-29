@@ -1,0 +1,25 @@
+        body{
+            text-align: center;
+        }
+        .d1{
+           padding-top: 100px;
+
+
+       }
+        .img1{
+            width: 125px;
+            height: 125px;
+
+        }
+        .d1 p{
+            line-height: 35px;
+        }
+        .jump{
+
+            background-color: #51C332;
+            border: 1px solid #51C332;
+            width: 135px;
+            height: 35px;
+            color: white;
+            cursor: pointer;
+        }

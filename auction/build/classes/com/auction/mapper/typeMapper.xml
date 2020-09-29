@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.auction.dao.TypeDAO">
+	
+	<!-- 查询所有类型 -->
+	<select id="getAllTypes" resultType="com.auction.entity.Type">
+		select * from type
+	</select>
+	
+	<!-- 通过类型名查询 -->
+  	<select id="getTypeByName" resultType="com.auction.entity.Type">
+		select * from type where typeName=#{typeName}
+	</select>
+	
+	<!-- 通过id查询 -->
+  	<select id="getTypeById" resultType="com.auction.entity.Type">
+		select * from type where id=#{id}
+	</select>
+	
+	<!-- 删除1条 -->
+	<delete id="delete">
+		delete from type where id=#{id}
+	</delete>
+	
+	<!-- 删除多条 -->
+	<delete id="deleteAll">
+		delete from type where id in 
+		<foreach collection="array" item="ids" separator="," open="(" close=")">
+				#{ids}
+		</foreach>
+	</delete>
+	
+	<!-- 更新 -->
+	<update id="update">
+		update type set typeName=#{typeName} , specification=#{specification} where id=#{id}
+	</update>
+	
+	<!-- 新增 -->
+	<insert id="add">
+		insert into type(typeName,specification) values(#{typeName},#{specification})
+	</insert>
+</mapper>

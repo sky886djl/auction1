@@ -1,0 +1,272 @@
+
+
+.header0 {
+	width:1360px;
+	height: 46px;
+	margin: -8px;
+	background-color: #F7F7F7;
+}
+
+.header0 span {
+	font: 12px/1.5 tahoma, arial, 'Hiragino Sans GB', '\5b8b\4f53',
+		sans-serif;
+	line-height: 1.5;
+	float: right;
+	padding-right: 10px;
+	padding-top: 12px;
+}
+
+.header0 .home {
+	float:left;
+	color:red;
+	margin-left:30px;
+}
+
+.header0 .login {
+	margin-top:-8px;
+	margin-left:60px;
+	margin-right:30px;
+}
+.header0 a .home {
+	color: red;
+}
+
+.header0 span a:visited{
+	color:#666666;
+}
+
+
+.nav2 .menu1 {
+	list-style: none;
+	margin-left: 0px;
+}
+
+.nav2 .menu1 li {
+	float: left;
+	text-align: center;
+	width: 100px;
+	font-size: 14px;
+	font-weight: bold;
+	font-family: SimSun;
+	text-indent: 10px;
+	border-right: 1px solid #e8e8e8;
+}
+
+.nav2 .menu1 a {
+	color: #000000;
+}
+
+.nav2 .menu1 a:hover {
+	color: white;
+	background-color: #D91615;
+	padding: 4px;
+}
+.nav2 .container .search {
+	background: url(../images/search.png);
+	transform: scale(1);
+}
+
+.nav2 .container {
+	padding-bottom: 2px;
+	margin-top: -4px;
+	float: right;
+}
+
+.nav2 .container .sousuo {
+	margin-top: -2px;
+	width: 150px;
+	height: 20px;
+	background-repeat: no-repeat;
+	padding-left: 5px;
+	border: 1px solid black;
+}
+
+.line {
+	border: 1.5px solid #e8e8e8;
+	margin-top: 44px;
+	margin-left: -20px;
+	width: 1666px;
+}
+.nav2 .menu1 a {
+	text-decoration: none;
+}
+
+
+.nav2 *{ 
+ margin:0; 
+ padding:0; 
+} 
+.nav2{ 
+ float:right;
+} 
+.nav2 ul{ 
+ list-style:none; 
+} 
+.nav2 ul li{ 
+ float:left; 
+ line-height:24px; 
+ text-align:center; 
+} 
+.nav2 ul li a{ 
+ text-decoration:none; 
+ color:#000000; 
+ display:block; 
+ width:74px; 
+ height:24px; 
+} 
+.nav2 ul li a:hover{ 
+ background-color:#F7F7F7; 
+} 
+.nav2 ul li ul li{ 
+ float:none; 
+ background-color:#EEEEEE; 
+} 
+.nav2 ul li ul{ 
+ display:none; 
+} 
+/*为了兼容IE7设置的CSS样式，但是又必须写在a:hover前面*/
+.nav2 ul li ul li a:link,ul li ul li a:visited{ 
+ background-color:#EEEEEE; 
+} 
+.nav2 ul li ul li a:hover{ 
+ background-color:#F7F7F7;
+} 
+
+
+
+.header2 {
+	background:#FF4401;
+	margin-left:-20px;
+	height:60px;
+	width:1370px;
+	font: 14px/1.5 "微软雅黑";
+	color:white;
+	font-weight: 700;
+}
+
+.header2 .logo1 {
+	width:200px;
+	height:50px;
+	margin-left:90px;
+	padding-top:4px;
+}
+
+.header2 .title1 {
+	width:50px;
+	height:30px;
+	margin-top:-50px;
+	margin-left:320px;
+	padding-top:24px;
+}
+
+.header2 .title2 {
+	height:30px;
+	width:50px;
+	margin-left:400px;
+	margin-top:-30px;
+}
+
+.header2 .select {
+	height:10px;
+	width:30px;
+	margin-top:-14px;
+	margin-left:320px;
+	padding-top:-20px;
+}
+
+.header2 .search {
+	padding:0;
+	margin-left:900px;
+	margin-top:-30px;
+	width:360px;
+	height:30px;
+}
+
+.search .input1 {
+	margin-top:2px;
+	height:26px;
+	width:200px;
+	font-size:12px;
+    border-top-left-radius:12px;
+    border-bottom-left-radius: 12px;
+    transition: 0.5s;             
+    border: 1px #999999 solid;
+    padding-left:8px;
+      outline:none;
+}
+
+.search .button1 {
+	margin:0px;
+	height:28px;
+	width:50px;
+	font: 12px/1.5 "微软雅黑";
+    border:none;
+    border-top-right-radius: 14px;
+   border-bottom-right-radius: 14px;
+     outline:none;
+}
+
+.header2 a {
+	color:white;
+	text-decoration: none;
+}
+
+.left {
+	width:160px;
+	height:500px;
+	margin-top:30px;
+	margin-left:100px;
+	float:left;
+	background:#F5F8FA;
+}
+
+.left ul {
+	padding-left:10px;
+	font-size:16px;
+	list-style: none;
+}
+
+.left .header2 {
+	width:140px;
+	height:24px;
+	margin:0;
+	margin-bottom:8px;
+	margin-top:8px;
+	padding:4px;
+	font: 16px/1.5 Tahoma,Helvetica,Arial,'宋体',sans-serif;
+	color:black;
+	font-weight: 700;
+}
+
+.left ul li ul li {
+	padding-left:16px;
+	margin-top:6px;
+	font: 14px/1.5 Tahoma,Helvetica,Arial,'宋体',sans-serif;
+	color:white;
+}
+
+.left a:hover {
+	background:#FF4401;
+	color:white;
+}
+
+.left a {
+	text-decoration: none;
+	color:black;
+	width:120px;
+	height:21px;
+	padding:4px;
+	padding-left:10px;
+	padding-right:58px;
+}
+
+.main {
+	margin-left:320px;
+	margin-top:30px;
+	background:#F5F8FA;
+	height:700px;
+	width:1000px;
+	
+}
+
+

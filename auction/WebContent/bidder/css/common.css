@@ -1,0 +1,15 @@
+.mainTitle {
+	font:18px/1.5 "微软雅黑";
+	font-weight: 700;
+	color:#666666;
+	margin-top:20px;
+	padding-top:16px;
+	margin-left:20px;
+}
+
+.mainTitleLine {
+	margin-top:20px;
+	margin-left:20px;
+	width:940px;
+	color:#666666;
+}

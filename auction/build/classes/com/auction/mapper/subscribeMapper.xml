@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.auction.dao.SubscribeDAO">
+	
+	<resultMap type="com.auction.entity.Subscribe" id="SubscribeMap">
+		<!--主键 -->
+		<id column="id" property="id" />
+		<result column="pro_id" property="pro_id" />
+		<result column="user_id" property="user_id" />
+		<result column="pro_status" property="pro_status" />
+		<association column="product" property="product" javaType="com.auction.entity.Product">
+			<!-- 取别名pid -->
+			<result column="pid" property="id" />
+			<result column="name" property="name" />
+			<result column="start_time" property="start_time" />
+			<result column="deadline" property="deadline" />
+		</association>
+	</resultMap>
+	
+	<!-- 根据用户编号查询提醒信息 -->
+	<select id="getAllSubscribesByUserId" resultType="com.auction.entity.Subscribe">
+		select * from subscribe where user_id=#{user_id}
+	</select>
+	
+	<!-- 根据用户编号查询提醒信息 -->
+	<select id="getAllSubscribesByUserId2" resultMap="SubscribeMap">
+		select s.id,s.pro_id,s.user_id,s.pro_status,
+			p.id pid,p.name,p.start_time,p.deadline
+		  from subscribe s,product p where s.user_id=#{user_id} and s.pro_id=p.id
+	</select>
+	
+	<!-- 获取提醒 -->
+	<select id="getSubscribe" resultType="com.auction.entity.Subscribe">
+		select * from subscribe where user_id=#{user_id} and pro_id=#{pro_id}
+	</select>
+	
+	<!-- 设置提醒 -->
+	<insert id="addSubscribe" parameterType="Map">
+		insert into subscribe(pro_id,user_id,pro_status) values(#{pro_id},#{user_id},#{pro_status})
+	</insert>
+	
+	<!-- 取消提醒 -->
+	<delete id="cancelSubscribe" parameterType="Map">
+		delete from subscribe where user_id=#{user_id} and pro_id=#{pro_id}
+	</delete>
+	
+	<!-- 更新提醒状态 -->
+	<update id="updateStatus">
+		update subscribe set pro_status=#{pro_status} where id=#{id}
+	</update>
+	
+</mapper>

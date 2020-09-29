@@ -1,0 +1,77 @@
+div {
+	background-color: #C81F26;
+	font-size: 30px;
+	padding: 5px;
+	color: white;
+}
+
+.form1 {
+	background: #F8F8FF;
+	border: #357FC4 solid 1px;
+	color: #575454;
+	width: 600px;
+	height: 450px;
+	margin-top: 20px;
+	margin-left: 350px;
+	font-size: 15px;
+}
+
+table {
+	margin: 20px auto;
+}
+
+a {
+	text-decoration: none;
+}
+
+input[type=submit] { display: inline-block; vertical-align: left; padding: 12px 24px; margin: 0px; font-size:14px; line-height: 16px; text-align: center; white-space: nowrap; vertical-align: middle; cursor: pointer; color: #FFFFFF; background-color: #C81F26	; border-radius: 3px; border: none; -webkit-appearance: none; outline:none; width:36%; }
+tr {
+	height: 30px;
+}
+
+td:first-child {
+	text-align: right;
+	padding: 0 5px;
+}
+
+td:only-child {
+	text-align: center;
+	font-size: 12px;
+}
+
+span:before {
+	content: "* ";
+	color: red;
+}
+
+input[type="text"]:read-only {
+	border: #888484 solid 2px;
+	background: #888484;
+	font-weight: bold;
+}
+.font1{
+	color:#D91615;
+	font-size: 16px;
+}
+.font2{
+	color:#19AA6B;;
+	font-size: 16px;
+}
+span1{
+	width: 200px;
+	font-size:14px;
+	color:#D91615;
+}
+.sel{
+	width: 60px;
+	height: 24px;
+	font-size: 16px;
+}
+
+.top{
+	margin-top: 60px;
+	margin-left: 100px;
+	width:400px;
+	height: 100px;
+	background-color: #F8F8FF;
+}

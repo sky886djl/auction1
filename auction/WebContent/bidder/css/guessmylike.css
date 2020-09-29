@@ -1,0 +1,178 @@
+.mainTitle {
+	font:20px/1.2 "微软雅黑";
+	font-weight: 700;
+	color:#666666;
+	margin-top:20px;
+	margin-left:20px;
+}
+		.p0{
+    		color: #D91615;
+    		width: 880px;
+    		height:600px;
+    		margin-top:10px
+    	}
+    	.p1{
+    		color:#000;
+    		margin-top: 30px;
+    		margin-left:44px;
+    		width:940px;
+    		height:264px;
+    		
+    	}
+    	
+    	.today{
+    		font-size: 28px;
+    		font-weight: bolder;
+    	}
+    	
+    	.onlooks{
+    		margin-left: 750px;
+    		margin-top: -20px;
+    		color: #D91615;
+    		font-size: 18px;
+    	}
+
+    	a{
+    		text-decoration: none;
+    	}
+    	.price{
+    		color: #D91615;
+    		font-size: 24px;
+    		font-weight: bolder;
+    		margin-left:34px;
+    	}
+    	.num{
+    		height:20px;
+    		font-size: 14px;
+    		color: #999999;
+    	}
+    	nums{
+    		color: #666666;
+    		font-size: 16px;
+    	}
+    	.time1{
+    		margin-left: 42px;
+    	}
+    	.time2{
+    		margin-left: 70px;
+    	}
+    	.time3{
+    		margin-left: 78px;
+    	}
+    	
+    	.time5{
+    		margin-left: 78px;
+    	}
+    	
+    	date{
+    		font-size: 14px;
+    		font-weight: 550;
+    	}
+    	.more{
+    		float: right;
+    		color:#333333;
+    		font-weight: 400;
+    		font-size: 14px;
+    	}
+    	moretol{
+    		color: #D91615;
+    		font-size: 18px;
+    	}
+    	.column1{
+    		width:280px;
+    		height:264px;
+    		border:3px solid #EAEAEA
+    	}
+    	.column2{
+    		width:280px;
+    		height:264px;
+    		margin-left: 300px;
+    		margin-top: -294px;
+    		border:3px solid #EAEAEA;
+    	}
+    	.column3{
+    		width:280px;
+    		height:264px;
+    		margin-left: 600px;
+    		margin-top: -294px;
+    		border:3px solid #EAEAEA;
+    	}
+    	
+    	.end{
+    		 color:#333333;
+    		 font-size:14px;
+    	}
+    	
+    	
+    	.p11{
+    		color: #19AA6B;
+    		width: 880px;
+    		margin-top: 60px;
+    	}
+		.future{
+    		font-size: 28px;
+    		font-weight: bolder;
+    	}
+    	.onlooks2{
+    		margin-left: 750px;
+    		margin-top: -20px;
+    		color: #19AA6B;
+    		font-size: 18px;
+    	}
+    	.more2{
+    		float: right;
+    		color:#19AA6B;
+    		font-weight: 400;
+    		font-size: 14px;
+    	}
+    	
+		moretol2{
+    		color: #19AA6B;
+    		font-size: 18px;
+    	}
+    	
+    	.column11{
+    		width:280px;
+    		border:3px solid #EAEAEA
+    	}
+    	.column21{
+    		width:280px;
+    		margin-left: 300px;
+    		margin-top: -272px;
+    		border:3px solid #EAEAEA;
+    	}
+    	.column31{
+    		margin-left: 600px;
+    		margin-top: -272px;
+    		border:3px solid #EAEAEA;
+    	}
+    
+		.price1{
+    		color: #19AA6B;
+    		font-size: 24px;
+    		font-weight: bolder;
+    	}
+    	
+		.num1{
+			margin-top: -18px;
+    		font-size: 14px;
+    		color: #999999;
+    		
+    	}
+    	
+.todaybottom{
+	margin-top:36px;
+}
+
+.timeA {
+	float:right;
+}
+
+.main1 {
+	margin-left:320px;
+	margin-top:30px;
+	background:#F5F8FA;
+	height:1500px;
+	width:1000px;
+	
+}

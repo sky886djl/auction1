@@ -1,0 +1,89 @@
+ <!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.auction.dao.OrderDAO">
+	<resultMap type="com.auction.entity.Order1" id="orderMap">
+		<id column="id" property="id" />
+		<result column="address1" property="address1" />
+		<result column="address2" property="address2" />
+		<result column="lastOpTime" property="lastOpTime" />
+		<result column="status" property="status" />
+		<association column="buyer_id" property="buyer_id" javaType="com.auction.entity.User">
+			<!-- 取别名uid -->
+			<result column="uid" property="id"/>
+	        <result column="username1" property="username"/>
+	        <result column="tel1" property="tel"/>
+	        <result column="email1" property="email"/>
+		</association>
+		<association column="pro_id" property="pro_id" javaType="com.auction.entity.Product">
+			<!-- 取别名pid -->
+			<result column="pid" property="id"/>
+			<result column="pname" property="name"/>
+			<result column="pic_url" property="pic_url"/>
+	        <result column="initialprice" property="initialPrice"/>
+	        <result column="nowprice" property="nowPrice"/>
+	        <result column="start_time" property="start_time"/>
+	        <result column="deadline" property="deadline"/>
+	        <association column="seller_id" property="seller_id" javaType="com.auction.entity.User">
+	        	<!-- 取别名uuid -->
+				<result column="uuid" property="id"/>
+	        	<result column="username2" property="username"/>
+	       	 	<result column="tel2" property="tel"/>
+	        	<result column="email2" property="email"/>
+	        </association>
+		</association>
+	</resultMap>
+	
+	<!-- 根据买家查询所有订单信息 -->
+	<select id="getAllOrdersByBuyer" resultMap="orderMap">
+		select o.id,o.address1,o.address2,o.lastOpTime,o.status,
+		u.id uid,u.username username1,u.tel tel1,u.email email1,
+		p.pid,p.pname pname,p.pic_url,p.initialprice,p.nowprice,p.start_time,p.deadline,
+		p.uuid,p.username2,p.tel2,p.email2
+		from order1 o,user u,
+		(select u2.id uuid,u2.username username2,u2.tel tel2,u2.email email2,
+		p1.id pid,p1.name pname,p1.pic_url,p1.initialprice,p1.nowprice,p1.start_time,p1.deadline
+		from product p1, user u2
+		where p1.seller_id=u2.id) as p
+		where o.buyer_id=#{buyer_id} and o.buyer_id=u.id and o.pro_id=p.pid  
+		<if test="type!=0">
+			and o.status=#{type}
+		</if>
+	</select>
+	<!-- 根据委托者查询所有订单信息 -->
+	<select id="getAllOrdersBySeller" resultMap="orderMap">
+		select o.id,o.address1,o.address2,o.lastOpTime,o.status,
+		u.id uid,u.username username1,u.tel tel1,u.email email1,
+		p.pid,p.name pname,p.pic_url,p.initialprice,p.nowprice,p.start_time,p.deadline,
+		p.uuid,p.username2,p.tel2,p.email2
+		from order1 o,user u,
+		(select u2.id uuid,u2.username username2,u2.tel tel2,u2.email email2,
+		p1.id pid,p1.name,p1.pic_url,p1.initialprice,p1.nowprice,p1.start_time,p1.deadline
+		from product p1, user u2
+		where p1.seller_id=#{seller_id} and p1.seller_id=u2.id) as p
+		where o.buyer_id=u.id and o.pro_id=p.pid  
+	</select>
+	<!-- 更新订单状态 -->
+	<update id="updateStatus" parameterType="com.auction.entity.Order1">
+		update order1 set status=#{status},lastOpTime=now() where id=#{id}
+	</update>
+	
+	<!-- 新增订单 -->
+	<insert id="addOrder">
+		insert into order1(id,buyer_id,pro_id,address1,address2,lastOpTime,status)
+		values(#{id},#{buyer_id.id},#{pro_id.id},#{address1},#{address2},now(),1)
+	</insert>
+	<!-- 删除订单 -->
+	<delete id="delOrder">
+		delete from order1 where id=#{id}
+	</delete>
+	<!-- 批量删除 -->
+	<delete id="delOrders" parameterType="int[]">
+		delete from order1 where id in
+		<foreach collection="array" item="ids" separator="," open="(" close=")">
+				#{ids}
+		</foreach>
+	</delete>
+	
+	
+</mapper>

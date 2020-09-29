@@ -1,0 +1,124 @@
+<!--_meta 作为公共模版分离出去-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>添加产品</title>
+    <link rel="stylesheet" type="text/css" href="static/h-ui/css/H-ui.min.css" />
+	<link rel="stylesheet" type="text/css" href="static/h-ui.admin/css/H-ui.admin.css" />
+	<link rel="stylesheet" type="text/css" href="lib/Hui-iconfont/1.0.8/iconfont.css" />
+
+	<link rel="stylesheet" type="text/css" href="static/h-ui.admin/skin/default/skin.css" id="skin" />
+	<link rel="stylesheet" type="text/css" href="static/h-ui.admin/css/style.css" />
+	<link rel="stylesheet" type="text/css" href="test/css/tinyImgUpload.css">
+
+</head>
+<body>
+
+<div class="page-container">
+	<form action="" method="post" class="form form-horizontal" id="form-article-add">
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>产品名称：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" class="input-text" value="" placeholder="" id="" name="">
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>产品类别：</label>
+			<div class="formControls col-xs-8 col-sm-9"> <span class="select-box">
+				<select name="" class="select">
+					<option value="0">请选择产品分类</option>
+					<option value="1">车品配件</option>
+					<option value="2">图书影音</option>
+					<option value="3">珠宝首饰</option>
+					<option value="4">电子产品</option>
+				</select>
+				</span> </div>
+		</div>
+
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>起拍价：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" name="" id="" placeholder="" value="" class="input-text" style="width:90%">
+				元</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>上传图片：</label>
+ 			<div id="upload">
+ 				
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>开始时间：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" onfocus="WdatePicker({ dateFmt: 'yyyy-MM-dd HH:mm:ss' })" id="startDate" class="input-text Wdatetime" style="width:120px;">
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>结束时间：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" onfocus="WdatePicker({ dateFmt: 'yyyy-MM-dd HH:mm:ss' })" id="endDate" class="input-text Wdatetime" style="width:120px;">
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>产品描述：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" name="" id="" placeholder="" value="" class="input-text" style="width:90%" />
+				</div>
+		</div>
+		<div class="row cl">
+			<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
+				<input type="button" onClick="product_save_submit();" name="" id="" value="test" />
+				<button id="btn" onClick="product_save_submit();" class="btn btn-primary radius" type="button"><i class="Hui-iconfont">&#xe632;</i> 保存并提交审核</button>
+				<input class="btn btn-default radius" type="reset" value="取消"/>
+			</div>
+		</div>
+	</form>
+</div>
+
+<script type="text/javascript" src="lib/jquery/1.9.1/jquery.min.js"></script> 
+<script type="text/javascript" src="lib/layer/2.4/layer.js"></script>
+<script type="text/javascript" src="static/h-ui/js/H-ui.min.js"></script> 
+<script type="text/javascript" src="static/h-ui.admin/js/H-ui.admin.js"></script>
+
+<script type="text/javascript" src="lib/My97DatePicker/4.8/WdatePicker.js"></script> 
+<script type="text/javascript" src="lib/jquery.validation/1.14.0/jquery.validate.js"></script> 
+<script type="text/javascript" src="lib/jquery.validation/1.14.0/validate-methods.js"></script> 
+<script type="text/javascript" src="lib/jquery.validation/1.14.0/messages_zh.js"></script> 
+<script src="test/js/tinyImgUpload.js"></script>
+<script>
+document.documentElement.style.fontSize = document.documentElement.clientWidth*0.1+'px';
+
+var options = {
+    path: '/',
+    onSuccess: function (res) {
+        console.log(res);
+    },
+    onFailure: function (res) {
+        console.log(res);
+    }
+}
+
+var upload = tinyImgUpload('#upload', options);
+	document.getElementById('btn').onclick = function (e) {
+	var files=document.getElementsByTagName('img')
+	for(var i=0;i<files.length;i++){
+		console.log(files[i]);
+	}
+    //upload();
+}
+
+function product_save_submit() {
+	console.log(document.getElementById('startDate').value);
+	console.log(document.getElementById('endDate').value);
+	var imgs=document.getElementsByTagName('img');
+	for(var i=0;i<imgs.length;i++)
+	{
+		console.log(imgs[i].src);
+		console.log('\n\n');
+	}
+}
+</script>
+</body>
+</html>
